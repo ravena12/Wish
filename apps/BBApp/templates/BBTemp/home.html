@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Wish Dashboard</title>
+	{% load staticfiles %}
+</head>
+<body>
+	      <a href = "{% url 'my_wish_logout' %}"> Logout</a></li>
+
+		<h4> Welcome {{ current.first_name}}! </h4>
+<p> Your Wish List </p>
+<table>
+	<tr>
+		<th> Item </th>
+		<th> Added by</th>
+		<th> Date added</th>
+		<th>Action </th>
+	</tr>
+	<td>
+		{% for item in thisuser %}
+		<p> <a href ="{% url 'my_wish_product' item.id %}">{{item.item }}</a> </p>
+		{% endfor %}
+	
+	</td>
+	<td>
+	{% for item in thisuser %}
+		<p> {{item.creator.first_name}}</p>
+		{% endfor %}
+
+	</td>
+	<td>
+	{% for item in thisuser %}
+		<p> {{item.created_at}}</p>
+		{% endfor %}
+	</td>
+	<td>
+	{% for item in others %}
+		<p><a href ="{% url 'my_wish_destroy' item.id %}"> Remove from my wishlist!</a></p>
+		{% endfor %}
+	</td>
+	<td>
+	{% for item in oneu %}
+		<p><a href ="{% url 'my_wish_delete' item.id %}"> delete!</a></p>
+		{% endfor %}
+
+	</td>
+
+
+
+</table>
+<p> Others User's Wish List </p>
+<table>
+	<tr>
+		<th> Item </th>
+		<th> Added by</th>
+		<th> Date added</th>
+		<th>Action </th>
+	</tr>
+	<td>
+		{% for item in others %}
+		<p> <a href ="{% url 'my_wish_product' item.id %}">{{item.item }}</a> </p>
+		{% endfor %}
+	
+	</td>
+	<td>
+	{% for item in others %}
+		<p> {{item.creator.first_name}}</p>
+		{% endfor %}
+
+	</td>
+	<td>
+	{% for item in others %}
+		<p> {{item.created_at}}</p>
+		{% endfor %}
+
+	</td>
+	<td>
+	{% for item in others %}
+		<p><a href ="{% url 'my_wish_join' item.id %}"> Add to my Wish List!</a></p>
+		{% endfor %}
+	</td>
+
+</table>
+<a href = "{% url 'my_wish_addpage' %}"> Add Item</a></li>
+
+	
+</body>
+</html>

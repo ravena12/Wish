@@ -40,10 +40,15 @@ def processlogin(request):
 		return redirect(reverse('my_travel_index'))
 
 def processwish(request):
-	userid = User.objects.get(id= request.session['id'])
+	userid = User.objects.get(id= request.session['id']).id
 	results = Wish.wishManager.isvalidwish(request.POST, userid)
-	Wish.wishManager.create(item = request.POST['item'], creator = User.objects.get(id= request.session['id']))
-	return redirect(reverse('my_wish_home'))
+	if results[0]:
+		return redirect(reverse('my_wish_home'))
+	else: 
+		errors = results[1]
+		for error in errors:
+			messages.warning(request, error)
+		return redirect(reverse('my_wish_addpage'))
 
 
 
@@ -69,9 +74,10 @@ def home(request):
 	context = {
 		'current': User.objects.get(id=request.session["id"]),
 		'thisuser':Wish.objects.filter(creator = user)| Wish.objects.filter(others=user.id),
+		'oo': Wish.objects.filter(others = user),
 		'oneu': Wish.objects.filter(creator=user),
 		'wishes': Wish.objects.all(),
-		'others': Wish.objects.exclude(creator = user.id)
+		'others': Wish.objects.exclude(creator = user)
 	}
 	print Wish.objects.all()
 

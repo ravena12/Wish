@@ -2,52 +2,47 @@
 <html>
 <head>
 	<title>Wish Dashboard</title>
-	{% load staticfiles %}
 </head>
 <body>
-	      <a href = "{% url 'my_wish_logout' %}"> Logout</a></li>
+	      <a href = "{% url 'my_wish_logout' %}"> Logout</a>
 
 		<h4> Welcome {{ current.first_name}}! </h4>
-<p> Your Wish List </p>
-<table>
+	<p> Your Wish List </p>
+	<table>
 	<tr>
 		<th> Item </th>
 		<th> Added by</th>
 		<th> Date added</th>
 		<th>Action </th>
 	</tr>
-	<td>
-		{% for item in thisuser %}
-		<p> <a href ="{% url 'my_wish_product' item.id %}">{{item.item }}</a> </p>
-		{% endfor %}
-	
-	</td>
-	<td>
-	{% for item in thisuser %}
-		<p> {{item.creator.first_name}}</p>
-		{% endfor %}
-
-	</td>
-	<td>
-	{% for item in thisuser %}
-		<p> {{item.created_at}}</p>
-		{% endfor %}
-	</td>
-	<td>
-	{% for item in others %}
-		<p><a href ="{% url 'my_wish_destroy' item.id %}"> Remove from my wishlist!</a></p>
-		{% endfor %}
-	</td>
-	<td>
-	{% for item in oneu %}
-		<p><a href ="{% url 'my_wish_delete' item.id %}"> delete!</a></p>
-		{% endfor %}
-
-	</td>
-
-
-
+	<tr>
+			<td>
+				{% for item in thisuser %}
+				<p><a href ="{% url 'my_wish_product' item.id %}">{{item.item }}</a></p>
+				{% endfor %}
+				
+			</td>
+			<td>{% for item in thisuser %}
+				<p>{{item.creator.first_name}}</p>
+				{% endfor %}
+				
+			</td>
+			<td>{% for item in thisuser %}
+				<p>{{item.created_at}}</p>
+				{% endfor %}
+			</td>
+			<td>
+				{% for item in oneu %}
+				 <a href ="{% url 'my_wish_delete' item.id %}"> <p>delete!</p></a>
+				{% endfor %}
+				{% for item in oo %}
+				<p> <a href ="{% url 'my_wish_destroy' item.id %}"> <p>Remove from my wishlist!</p></a></p>
+				{% endfor %}
+			</td>
+	</tr>
 </table>
+
+
 <p> Others User's Wish List </p>
 <table>
 	<tr>

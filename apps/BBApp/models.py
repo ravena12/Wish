@@ -55,14 +55,14 @@ class WishManager(models.Manager):
 	def isvalidwish(self, context, userid):
 		errors = []
 		passflag = True
-		if len(self.filter(item = context['item'])) < 3:
+		if len(context['item']) < 3:
 			errors.append('must be more than 3 characters')
 			passflag = False
 			return [passflag, errors]
 
 		if passflag == True:
-			Wish.wishManager.create(item = context['item'], creator = userid)
-		return [passflag, errors]
+			Wish.wishManager.create(item = context['item'], creator = User.objects.get(id = userid))
+			return [passflag, errors]
 
 
 class User(models.Model):
